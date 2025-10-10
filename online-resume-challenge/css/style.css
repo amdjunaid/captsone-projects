@@ -1,0 +1,63 @@
+/* CSS Reset and Base Styles - Clean foundation */
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} */
+
+/* Root Variables - Defining our brand colors */
+:root {
+    --primary-red: #C1272D;        /* River Tech Source brand red */
+    --white: #FFFFFF;              /* Pure white for text and contrast */
+    --dark-gray: #333333;          /* Professional dark text */
+    --light-gray: #F8F8F8;         /* Subtle background */
+    --black: #000000;              /* Strong headlines */
+    --shadow: rgba(193, 39, 45, 0.1); /* Subtle red shadow */
+}
+
+
+/* Base typography - Elegant font system */
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    color: var(--dark-gray);
+    background-color: var(--white);
+    overflow-x: hidden;            /* Prevent horizontal scroll */
+}
+
+.hero, .job-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.contact-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.company-details, div.role-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.skills > p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.award-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+
+.award-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
