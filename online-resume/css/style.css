@@ -37,7 +37,7 @@ div.contact-info {
     align-items: center;
 }
 
-div.company-details, div.role-details {
+div.company-details, div.role-details, div.university_details, div.course_details {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -56,8 +56,48 @@ div.company-details, div.role-details {
     
 }
 
-.award-title {
+.award-title, .award-title > h4, .award-title > p {
+    margin: 0px;
+    padding: 0px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.company-details, .company-details > h4, .company-details > p, .role-details, .role-details > h4, .role-details > p {
+    margin: 0px;
+    padding: 0px;
+}
+
+.university_details, .university_details > h4, .university_details > p, .course_details, .course_details > h4, .course_details > p {
+    margin: 0px;
+    padding: 0px;
+}
+
+hr {
+    border: 2px solid var(--black); /* Adjust thickness by changing the value */
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: var(--white);
+    color: var(--dark-gray);
+    font-size: 14px;
+}
+
+body {
+    font-weight: 500; /* Increase font weight for a bolder appearance */
+}
+
+.contact-info .email {
+    display: flex;
+    align-items: center;
+}
+
+.contact-info .email::before {
+    content: '\1F4E7'; /* Unicode for a different envelope icon */
+    margin-right: 10px; /* Add spacing between icon and email address */
+    font-size: 20px; /* Make the icon bigger */
+    color: var(--primary-red); /* Use the brand red color for the icon */
 }
