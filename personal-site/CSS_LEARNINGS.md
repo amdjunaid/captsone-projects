@@ -208,6 +208,105 @@ Both `nav` and `ul` have `display: flex`, but `nav` expands to full viewport wid
 
 ---
 
+## Question 4: How does display: flex affect containers vs their children?
+
+### Context
+
+**CSS (Relevant Excerpt):**
+```css
+nav {
+    display: flex;  /* What does this do to nav? What does it do to nav's children? */
+}
+
+nav ul {
+    display: flex;  /* What does this do to ul? What does it do to ul's children? */
+}
+```
+
+### Problem
+
+Understanding what exactly `display: flex` does - does it affect the element itself, or its children, or both?
+
+### Reasoning
+
+When you apply `display: flex` to an element, it has **two different effects**:
+
+#### 1. **Affects the CONTAINER itself (how it behaves in relation to its parent)**
+
+The element with `display: flex` keeps its original display type (block or inline):
+- If it was **block-level** (like `<nav>`, `<div>`, `<section>`), it stays block-level → takes 100% width
+- The element itself doesn't follow flexbox sizing rules
+- It remains a normal block or inline element in its parent's layout
+
+```css
+nav {
+    display: flex;  /* nav is still block-level, takes 100% width of parent */
+}
+```
+
+Visual representation:
+```
+┌─────────────── Parent (viewport) ──────────────┐
+│ ┌──────────── nav (block-level) ─────────────┐ │
+│ │  Still takes 100% width like a block       │ │
+│ └────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────┘
+```
+
+#### 2. **Affects the CHILDREN (how the container lays out its children)**
+
+The children inside become **flex items** and follow flexbox rules:
+- Children are laid out in a row (by default)
+- Children default to `flex-grow: 0` (content width only)
+- Children can be controlled with flexbox properties (`justify-content`, `align-items`, `gap`, etc.)
+- Children are no longer regular block or inline elements - they're flex items
+
+```css
+nav {
+    display: flex;  /* Makes nav's CHILDREN into flex items */
+}
+
+/* Now ul is a flex item, not a normal block element */
+```
+
+Visual representation:
+```
+┌────────────── nav (flex container) ─────────────┐
+│ ┌─ ul (flex item) ─┐                            │
+│ │  Content width   │    [unused space]          │
+│ └──────────────────┘                            │
+└──────────────────────────────────────────────────┘
+```
+
+### Real Example from Your Navigation
+
+```css
+nav {
+    display: flex;  /* ① nav takes 100% width (still block-level) */
+                    /* ② nav's children become flex items */
+}
+
+nav ul {
+    display: flex;  /* ① ul only takes content width (it's a flex item!) */
+                    /* ② ul's children (li) become flex items */
+}
+```
+
+**What happens:**
+- **`nav`**: Has `display: flex` but remains block-level → takes full viewport width
+- **`ul`**: Is a child of flex container (`nav`) → becomes flex item → only takes content width (unless told to grow)
+- **`li` elements**: Are children of flex container (`ul`) → become flex items → laid out in a row
+
+### Key Takeaway
+
+**`display: flex` is a two-way property:**
+1. The element itself maintains its block/inline nature in relation to its parent
+2. The element creates a flex formatting context for its children, making them flex items
+
+This dual nature is why `nav` (block-level with flex) takes full width, while `ul` (flex item inside nav) only takes content width.
+
+---
+
 ## Summary of Core Concepts
 
 1. **`justify-content: space-between` with one child** → Child aligns to the start/left
