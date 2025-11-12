@@ -307,12 +307,109 @@ This dual nature is why `nav` (block-level with flex) takes full width, while `u
 
 ---
 
+## Question 5: What happens to block-level children (like divs) inside a flex container?
+
+### Context
+
+**HTML Structure:**
+```html
+<nav>
+  <div>Item 1</div>
+  <div>Item 2</div>
+  <div>Item 3</div>
+</nav>
+```
+
+**CSS:**
+```css
+nav {
+    display: flex;
+}
+```
+
+### Problem
+
+Normally, `<div>` elements are block-level and stack vertically (one after another). But what happens when they're children of a flex container? Do they maintain their block-level behavior and stack vertically, or do they line up horizontally?
+
+### Reasoning
+
+**The Answer: They Line Up HORIZONTALLY (Same Row)**
+
+Even though `<div>` elements are block-level by default (and would normally stack vertically), **when their parent has `display: flex`, they become flex items and are laid out in a ROW by default**.
+
+Visual representation:
+```
+┌───────────────── nav ─────────────────┐
+│ [Item 1] [Item 2] [Item 3]            │  ← Horizontal!
+└────────────────────────────────────────┘
+```
+
+Instead of the normal block-level behavior:
+```
+┌───────────────── nav ─────────────────┐
+│ [Item 1]                               │
+│ [Item 2]                               │  ← This is what divs normally do
+│ [Item 3]                               │
+└────────────────────────────────────────┘
+```
+
+### Why This Happens
+
+**When an element becomes a flex item, it LOSES its original block/inline behavior.**
+
+This is a critical distinction:
+- **The PARENT** (nav) with `display: flex` maintains its block-level nature (takes 100% width in relation to its parent)
+- **The CHILDREN** (divs) become flex items and follow flexbox rules, NOT block-level rules anymore
+- Flex items are neither block nor inline - they're a completely different formatting context
+
+### The Technical Details
+
+```css
+nav {
+    display: flex;
+    flex-direction: row;  /* This is the DEFAULT - children line up horizontally */
+}
+```
+
+Flexbox has a `flex-direction` property that controls the layout direction:
+
+| Property | Effect |
+|----------|--------|
+| `flex-direction: row` | **Default** - Children line up horizontally (left to right) |
+| `flex-direction: row-reverse` | Children line up horizontally (right to left) |
+| `flex-direction: column` | Children stack vertically (top to bottom, like block elements) |
+| `flex-direction: column-reverse` | Children stack vertically (bottom to top) |
+
+So even though the divs were block-level elements, once they're inside a flex container, they're **flex items** and line up horizontally by default.
+
+### Key Clarification
+
+To be clear about what "maintains display type" means:
+
+**The flex container (parent with `display: flex`):**
+- Maintains its block/inline nature **in relation to its own parent**
+- A `<nav>` with `display: flex` is still block-level, so it takes 100% width of its parent
+
+**The flex items (children of flex container):**
+- **LOSE** their original block/inline nature
+- Follow flex item rules instead
+- A `<div>` inside a flex container is no longer a block element - it's a flex item
+- Flex items line up in a row by default (unless `flex-direction: column` is set)
+
+### Key Takeaway
+
+**Being inside a flex container fundamentally changes how children behave.** Block-level children (like `<div>`) become flex items and line up horizontally by default, not vertically. The original display type (block/inline) only matters for the flex container itself, not for its children.
+
+---
+
 ## Summary of Core Concepts
 
 1. **`justify-content: space-between` with one child** → Child aligns to the start/left
 2. **Flex items don't auto-expand** → They default to `flex-grow: 0` (content-width only)
 3. **Block-level elements keep their width behavior** → Even with `display: flex`, they still take 100% width
 4. **To make flex items expand** → Use `flex: 1` or `width: 100%`
+5. **`display: flex` has dual effects** → Container maintains its display type, but children become flex items
+6. **Flex items lose their original display type** → Block-level children (like `<div>`) line up horizontally by default, not vertically (`flex-direction: row` is default)
 
 ---
 
