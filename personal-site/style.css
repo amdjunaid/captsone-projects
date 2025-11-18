@@ -3,26 +3,32 @@
     padding: 0;
 }
 
-nav li {
-    list-style: none;
+
+/* Root Variables - Defining our brand colors */
+:root {
+    --primary-red: #EFECE3;        /* River Tech Source brand red */
+    --white: #FFFFFF;              /* Pure white for text and contrast */
+    --dark-gray: #333333;          /* Professional dark text */
+    --light-gray: #F8F8F8;         /* Subtle background */
+    --black: #000000;              /* Strong headlines */
+    --shadow: rgba(193, 39, 45, 0.1); /* Subtle red shadow */
+    --primary-color: #3B6DAF;
 }
 
-nav a {
-    text-decoration: none;
-}
-
+/* Base typography - Elegant font system */
 body {
-    font-family: Montserrat, Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+    font-family: 'Montserrat', sans-serif;
     line-height: 1.6;
+    color: var(--dark-gray);
+    background-color: var(--white);
+    overflow-x: hidden;            /* Prevent horizontal scroll */
 }
 
-section {
-    padding: 80px 0;
-}
+/* Navigation section styles */
 
 nav {
+    background-color: var(--white);
+    color: var(--primary-color);
     padding: 15px 0;
     display: flex;
     justify-content: center;
@@ -34,7 +40,59 @@ nav ul {
     gap: 20px;
 }
 
+nav li {
+    list-style: none;
+}
+
+h1 {
+    font-size: 3.5rem;
+    color: var(--black);
+}
+
+h1 span.highlight {
+    color: var(--primary-color);
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+section {
+    padding: 80px 0;
+}
+
+.bg-gray-light {
+    background-color: var(--light-gray);
+}
+
 .container {
-    padding-left: 30px;
-    padding-right: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas: "text image";
+    align-items: center;
+    justify-items: center;
+}
+
+.hero-text {
+    grid-area: text;
+}
+
+.hero-image {
+    grid-area: image;
+}
+
+.hero-image img {
+    border-radius: 10%;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1); */
 }
