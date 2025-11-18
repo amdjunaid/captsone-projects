@@ -402,6 +402,129 @@ To be clear about what "maintains display type" means:
 
 ---
 
+## Question 6: Why does my absolutely positioned nav stay left-aligned unless I add width: 100%?
+
+### Context
+
+**CSS (Relevant Excerpt):**
+```css
+nav {
+    background-color: var(--white);
+    color: var(--primary-color);
+    padding: 15px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    z-index: 100;
+}
+
+nav ul {
+    display: flex;
+    gap: 40px;
+}
+```
+
+### Problem
+
+When using `position: absolute` on the nav element, `justify-content: center` doesn't seem to center the navigation links on the page - they stay on the left. However, adding `width: 100%` suddenly makes the centering work. Why?
+
+### Reasoning
+
+**When you use `position: absolute`, the element loses its default block-level width behavior.**
+
+#### Without `width: 100%`:
+
+```
+┌────────────── viewport ──────────────┐
+│ [nav - only as wide as content]      │
+│  Home | About | Portfolio            │
+│                                       │
+└──────────────────────────────────────┘
+```
+
+What happens:
+- The `nav` **shrinks to fit its content** (the ul and links)
+- It's positioned at `left: 0` by default (left edge of the viewport)
+- `justify-content: center` centers the content **within the nav itself**, but the nav is still positioned on the left side
+- The nav is only as wide as needed to contain its children
+
+#### With `width: 100%`:
+
+```
+┌────────────── viewport ──────────────┐
+│ ┌──────── nav (full width) ────────┐ │
+│ │     Home | About | Portfolio     │ │
+│ └──────────────────────────────────┘ │
+└──────────────────────────────────────┘
+```
+
+What happens:
+- The `nav` takes 100% width of the viewport
+- `justify-content: center` centers the content within that full-width nav
+- Now the links appear centered on the page
+
+### Why This Happens
+
+**Absolutely positioned elements behave differently from normal block-level elements:**
+
+| Position Type | Default Width Behavior |
+|--------------|----------------------|
+| `position: static` (default) | Block elements take 100% width of parent |
+| `position: relative` | Block elements take 100% width of parent |
+| `position: absolute` | **Only as wide as content (shrink-to-fit)** |
+| `position: fixed` | **Only as wide as content (shrink-to-fit)** |
+
+When an element is absolutely positioned:
+1. It's removed from the normal document flow
+2. It no longer follows block-level width rules
+3. It **shrink-wraps** to fit its content
+4. It doesn't automatically take 100% width of its parent
+
+This is by design - absolute positioning is meant to give you precise control, so it doesn't make assumptions about width.
+
+### Fix
+
+**Option 1: Add `width: 100%`** (most common)
+```css
+nav {
+    position: absolute;
+    width: 100%;  /* Make nav span full viewport width */
+    display: flex;
+    justify-content: center;
+}
+```
+
+**Option 2: Use `left` and `right` properties**
+```css
+nav {
+    position: absolute;
+    left: 0;
+    right: 0;     /* Together, these make it span full width */
+    display: flex;
+    justify-content: center;
+}
+```
+
+**Option 3: Center the nav itself** (if you want a specific width)
+```css
+nav {
+    position: absolute;
+    width: 800px;
+    left: 50%;
+    transform: translateX(-50%);  /* Center the nav itself */
+    display: flex;
+    justify-content: center;
+}
+```
+
+### Key Takeaway
+
+**Absolutely positioned elements shrink-wrap their content and lose block-level width behavior.** If you want an absolutely positioned element to span the full width of its container, you must explicitly set `width: 100%` or use `left: 0; right: 0;`. Without this, `justify-content: center` will center content within the shrunk element, not within the full viewport.
+
+---
+
 ## Summary of Core Concepts
 
 1. **`justify-content: space-between` with one child** → Child aligns to the start/left
@@ -410,6 +533,7 @@ To be clear about what "maintains display type" means:
 4. **To make flex items expand** → Use `flex: 1` or `width: 100%`
 5. **`display: flex` has dual effects** → Container maintains its display type, but children become flex items
 6. **Flex items lose their original display type** → Block-level children (like `<div>`) line up horizontally by default, not vertically (`flex-direction: row` is default)
+7. **Absolutely positioned elements shrink-wrap** → They lose block-level width behavior and only take content width unless explicitly set with `width: 100%` or `left: 0; right: 0;`
 
 ---
 
