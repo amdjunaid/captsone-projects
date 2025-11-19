@@ -6,22 +6,67 @@
 
 /* Root Variables - Defining our brand colors */
 :root {
-    --primary-red: #EFECE3;        /* River Tech Source brand red */
-    --white: #FFFFFF;              /* Pure white for text and contrast */
-    --dark-gray: #333333;          /* Professional dark text */
-    --light-gray: #F8F8F8;         /* Subtle background */
-    --black: #000000;              /* Strong headlines */
-    --shadow: rgba(193, 39, 45, 0.1); /* Subtle red shadow */
+    --primary-red: #EFECE3;
+    /* River Tech Source brand red */
+    --white: #FFFFFF;
+    /* Pure white for text and contrast */
+    --dark-gray: #333333;
+    /* Professional dark text */
+    --light-gray: #F8F8F8;
+    /* Subtle background */
+    --black: #000000;
+    /* Strong headlines */
+    --shadow: rgba(193, 39, 45, 0.1);
+    /* Subtle red shadow */
     --primary-color: #3B6DAF;
+    --highlight-color: #ee6c4d;
+
+    --color-smart-blue-50: hsl(216.9 52% 95.1%);
+    --color-smart-blue-100: hsl(213.6 49% 90%);
+    --color-smart-blue-200: hsl(214.1 50.5% 80.2%);
+    --color-smart-blue-300: hsl(214.3 50.3% 70%);
+    --color-smart-blue-400: hsl(214.1 50% 60%);
+    --color-smart-blue-500: hsl(214 49.8% 50%);
+    --color-smart-blue-600: hsl(214.1 50% 40%);
+    --color-smart-blue-700: hsl(214.3 50.3% 30%);
+    --color-smart-blue-800: hsl(213.5 51% 20%);
+    --color-smart-blue-900: hsl(213.6 49% 10%);
+    --color-smart-blue-950: hsl(213.3 50% 7.1%);
+
+    --color-burnt-peach-50: hsl(11.4 84% 95.1%);
+    --color-burnt-peach-100: hsl(12.6 84.3% 90%);
+    --color-burnt-peach-200: hsl(12.1 82.4% 80%);
+    --color-burnt-peach-300: hsl(11.8 83% 70%);
+    --color-burnt-peach-400: hsl(12 83.3% 60%);
+    --color-burnt-peach-500: hsl(11.9 82.7% 50%);
+    --color-burnt-peach-600: hsl(12 83.3% 40%);
+    --color-burnt-peach-700: hsl(11.8 83% 30%);
+    --color-burnt-peach-800: hsl(12.1 82.4% 20%);
+    --color-burnt-peach-900: hsl(12.6 84.3% 10%);
+    --color-burnt-peach-950: hsl(12 83.3% 7.1%);
+
+    --color-powder-blue-50: hsl(200 46.2% 94.9%);
+    --color-powder-blue-100: hsl(200.9 45.1% 90%);
+    --color-powder-blue-200: hsl(202.2 45.1% 80%);
+    --color-powder-blue-300: hsl(202 46.4% 70%);
+    --color-powder-blue-400: hsl(201.7 46.1% 60%);
+    --color-powder-blue-500: hsl(202.1 45.9% 50%);
+    --color-powder-blue-600: hsl(201.7 46.1% 40%);
+    --color-powder-blue-700: hsl(202 46.4% 30%);
+    --color-powder-blue-800: hsl(202.2 45.1% 20%);
+    --color-powder-blue-900: hsl(200.9 45.1% 10%);
+    --color-powder-blue-950: hsl(202.5 44.4% 7.1%);
 }
 
 /* Base typography - Elegant font system */
 body {
     font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
     line-height: 1.6;
     color: var(--dark-gray);
     background-color: var(--white);
-    overflow-x: hidden;            /* Prevent horizontal scroll */
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
 }
 
 /* Navigation section styles */
@@ -37,6 +82,7 @@ nav {
     width: 100%;
     top: 0;
     z-index: 100;
+    opacity: 0.95;
 }
 
 nav ul {
@@ -48,9 +94,14 @@ nav li {
     list-style: none;
 }
 
+.hero.container {
+    padding: 120px 0;
+}
+
 .hero-title {
     font-size: 3.5rem;
     color: var(--black);
+    margin-bottom: 30px;
 }
 
 .hero-title span.highlight {
@@ -58,13 +109,15 @@ nav li {
 }
 
 .hero-subtitle {
-    font-size: 1.25rem;    
+    font-size: 1.25rem;
+    margin-bottom: 30px;
 }
 
 nav a {
     text-decoration: none;
     color: var(--primary-color);
     font-size: 1.2rem;
+    font-weight: 500;
 }
 
 section {
@@ -99,8 +152,81 @@ section {
 
 .hero-image img {
     border-radius: 10%;
-    width: 300px;
-    height: 300px;
+    width: 350px;
+    height: 350px;
     object-fit: cover;
     /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1); */
+}
+
+.cta-container {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* Smooth animation on hover */
+}
+
+.link-primary {
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: var(--color-burnt-peach-500);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--white);
+}
+
+.link-secondary {
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 2px solid var(--color-powder-blue-400);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    color: var(--color-powder-blue-400);
+}
+
+.link-secondary:hover {
+    background-color: var(--color-powder-blue-500);
+    color: var(--white);
+}
+
+.link-secondary:hover svg {
+    fill: var(--white);
+}
+
+.link-primary:hover {
+    background-color: var(--color-burnt-peach-600);
+    transform: translateY(-2px);
+    /* Moves button up 2px */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    /* Larger shadow on hover */
+}
+
+.btn-primary {
+    background-color: var(--color-burnt-peach-500);
+    color: var(--white);
+}
+
+/* Primary button hover effect - lifts up */
+.btn-primary:hover {
+    background-color: var(--color-burnt-peach-600);
+    transform: translateY(-2px);
+    /* Moves button up 2px */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    /* Larger shadow on hover */
+}
+
+.btn-secondary {
+    background-color: var(--white);
+    color: var(--color-burnt-peach-500);
+    border: 1px solid var(--color-burnt-peach-500);
 }
