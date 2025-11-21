@@ -94,25 +94,6 @@ nav li {
     list-style: none;
 }
 
-.hero.container {
-    padding: 120px 0;
-}
-
-.hero-title {
-    font-size: 3.5rem;
-    color: var(--black);
-    margin-bottom: 30px;
-}
-
-.hero-title span.highlight {
-    color: var(--primary-color);
-}
-
-.hero-subtitle {
-    font-size: 1.25rem;
-    margin-bottom: 30px;
-}
-
 nav a {
     text-decoration: none;
     color: var(--primary-color);
@@ -133,6 +114,8 @@ section {
     margin: 0 auto;
     padding: 0 20px;
 }
+
+/* Hero section styles */
 
 .hero {
     display: grid;
@@ -155,13 +138,36 @@ section {
     width: 350px;
     height: 350px;
     object-fit: cover;
+    border: 5px solid var(--color-powder-blue-400);
     /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1); */
+}
+
+.hero.container {
+    padding-top: 80px;
+    padding-bottom: 40px;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    color: var(--black);
+    margin-bottom: 30px;
+}
+
+.hero-title span.highlight {
+    color: var(--primary-color);
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 30px;
 }
 
 .cta-container {
     display: flex;
     gap: 10px;
 }
+
+/* Button styles */
 
 .btn {
     font-size: 1.2rem;
@@ -172,6 +178,28 @@ section {
     transition: all 0.3s ease;
     /* Smooth animation on hover */
 }
+
+.btn-primary {
+    background-color: var(--color-burnt-peach-500);
+    color: var(--white);
+}
+
+/* Primary button hover effect - lifts up */
+.btn-primary:hover {
+    background-color: var(--color-burnt-peach-600);
+    transform: translateY(-2px);
+    /* Moves button up 2px */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    /* Larger shadow on hover */
+}
+
+.btn-secondary {
+    background-color: var(--white);
+    color: var(--color-burnt-peach-500);
+    border: 1px solid var(--color-burnt-peach-500);
+}
+
+/* Link styles */
 
 .link-primary {
     font-size: 1.2rem;
@@ -211,22 +239,29 @@ section {
     /* Larger shadow on hover */
 }
 
-.btn-primary {
-    background-color: var(--color-burnt-peach-500);
-    color: var(--white);
+.about-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
 }
 
-/* Primary button hover effect - lifts up */
-.btn-primary:hover {
-    background-color: var(--color-burnt-peach-600);
-    transform: translateY(-2px);
-    /* Moves button up 2px */
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-    /* Larger shadow on hover */
+.about-content-personal .about-text p.about-lead {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    font-weight: 600;
+    color: var(--primary-color);
 }
 
-.btn-secondary {
-    background-color: var(--white);
-    color: var(--color-burnt-peach-500);
-    border: 1px solid var(--color-burnt-peach-500);
+.about-content-personal .about-text p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    color: var(--dark-gray);
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+.about-content-personal .about-text h3 {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    font-weight: 600;
+    color: var(--primary-color);
 }

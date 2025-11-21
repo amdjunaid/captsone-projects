@@ -525,6 +525,133 @@ nav {
 
 ---
 
+## Question 7: Why does my nav <ul> shift to the left when I remove width: 100% from the fixed nav?
+
+### Context
+
+**CSS (Relevant Excerpt):**
+```css
+nav {
+    background-color: var(--white);
+    padding: 15px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    width: 100%;  /* Without this, ul shifts left! */
+    top: 0;
+}
+
+nav ul {
+    display: flex;
+    gap: 40px;
+}
+```
+
+### Problem
+
+When I remove `width: 100%` from the nav element (which has `position: fixed`), the `<ul>` and navigation links shift to the left side of the screen instead of staying centered. Why is the `width: 100%` necessary?
+
+### Reasoning
+
+**`position: fixed` elements don't have a default width - they shrink-wrap to fit their content.**
+
+#### Without `width: 100%`:
+
+```
+┌────────────── viewport ──────────────┐
+│[nav]                                  │
+│ Home | About | Portfolio              │ ← Left aligned
+│                                       │
+└──────────────────────────────────────┘
+```
+
+What happens:
+- `position: fixed` removes the nav from the normal document flow
+- Unlike regular block elements, **fixed elements don't automatically take 100% width**
+- The nav **shrinks to fit its content** (the `<ul>` inside)
+- It defaults to `left: 0` (positioned at the left edge)
+- `justify-content: center` tries to center content, but there's **no extra space** within the nav to center anything
+- The nav is only as wide as the `<ul>`, so everything appears left-aligned
+
+#### With `width: 100%`:
+
+```
+┌────────────── viewport ──────────────┐
+│ ┌──────── nav (full width) ────────┐ │
+│ │     Home | About | Portfolio     │ │ ← Centered!
+│ └──────────────────────────────────┘ │
+└──────────────────────────────────────┘
+```
+
+What happens:
+- The nav spans the **full viewport width** (100%)
+- `justify-content: center` now has space to work with
+- The `<ul>` is centered within that full-width nav
+- Links appear centered on the page ✅
+
+### Why This Happens
+
+**`position: fixed` and `position: absolute` both cause elements to shrink-wrap to their content:**
+
+| Position Type | Default Width Behavior |
+|--------------|----------------------|
+| `position: static` (default) | Block elements take 100% width of parent |
+| `position: relative` | Block elements take 100% width of parent |
+| `position: fixed` | **Shrink-to-fit (only as wide as content)** |
+| `position: absolute` | **Shrink-to-fit (only as wide as content)** |
+
+When you use `position: fixed`:
+1. Element is removed from normal document flow
+2. Element is positioned relative to the **viewport** (not the parent)
+3. Element **loses block-level width behavior** (no longer takes 100% width by default)
+4. Element **shrinks to fit its content** unless you explicitly specify width
+5. Default positioning is `left: 0, top: 0` (top-left corner)
+
+This shrink-to-fit behavior is intentional - fixed positioning is meant for precise control (like tooltips, modals, sticky headers), so browsers don't assume you want full width.
+
+### Fix Options
+
+**Option 1: Add `width: 100%`** (Most Common ✅)
+```css
+nav {
+    position: fixed;
+    width: 100%;  /* Explicitly make nav span full viewport width */
+    display: flex;
+    justify-content: center;
+}
+```
+
+**Option 2: Use `left` and `right` together**
+```css
+nav {
+    position: fixed;
+    left: 0;
+    right: 0;     /* Together, these stretch nav to full width */
+    display: flex;
+    justify-content: center;
+}
+```
+This achieves the same result as `width: 100%` - the nav is stretched between the left and right edges of the viewport.
+
+**Option 3: Center the nav itself** (for a specific max-width)
+```css
+nav {
+    position: fixed;
+    width: 1200px;
+    left: 50%;
+    transform: translateX(-50%);  /* Center the fixed nav */
+    display: flex;
+    justify-content: center;
+}
+```
+
+### Key Takeaway
+
+**Unlike regular block elements, `position: fixed` elements shrink to fit their content and don't automatically span full width.** For a fixed navigation bar that should span the entire viewport, you must explicitly add `width: 100%` (or use `left: 0; right: 0;`). Without this, the nav will be only as wide as its content, and `justify-content: center` will have no extra space to work with, causing everything to appear left-aligned.
+
+---
+
 ## Summary of Core Concepts
 
 1. **`justify-content: space-between` with one child** → Child aligns to the start/left
@@ -534,6 +661,7 @@ nav {
 5. **`display: flex` has dual effects** → Container maintains its display type, but children become flex items
 6. **Flex items lose their original display type** → Block-level children (like `<div>`) line up horizontally by default, not vertically (`flex-direction: row` is default)
 7. **Absolutely positioned elements shrink-wrap** → They lose block-level width behavior and only take content width unless explicitly set with `width: 100%` or `left: 0; right: 0;`
+8. **Fixed positioned elements also shrink-wrap** → Like absolute positioning, `position: fixed` elements shrink to fit content and require explicit `width: 100%` to span full viewport width
 
 ---
 
