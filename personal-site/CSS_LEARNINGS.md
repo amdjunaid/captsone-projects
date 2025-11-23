@@ -652,6 +652,193 @@ nav {
 
 ---
 
+## Question 8: What's the difference between justify-content: center and justify-content: space-between for navigation links?
+
+### Context
+
+**HTML Structure:**
+```html
+<nav>
+  <div class="container">
+    <ul>
+      <li><a href="">Home</a></li>
+      <li><a href="">About Me</a></li>
+      <li><a href="">Portfolio</a></li>
+      <li><a href="">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+```
+
+**CSS Options:**
+```css
+/* Option 1: Center */
+nav ul {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+}
+
+/* Option 2: Space Between */
+nav ul {
+    display: flex;
+    /* gap: 40px; */  /* Usually commented out with space-between */
+    justify-content: space-between;
+}
+```
+
+### Problem
+
+When styling navigation links, should I use `justify-content: center` or `justify-content: space-between`? What's the visual difference and when should I use each?
+
+### Reasoning
+
+Both properties control how flex items are distributed along the main axis (horizontally by default), but they create very different layouts.
+
+#### **`justify-content: center`**
+
+**Visual Result:**
+```
+┌────────────── container (1200px) ──────────────┐
+│                                                 │
+│      [Home] [About] [Portfolio] [Contact]      │  ← Grouped in center
+│                                                 │
+└─────────────────────────────────────────────────┘
+```
+
+**What happens:**
+- All items are **grouped together** in the center
+- Items stay close to each other (with `gap` spacing between them)
+- Empty space is distributed **equally on both left and right sides**
+- The nav links appear as a **compact cluster** in the middle
+- **`gap` is typically used** to control spacing between items
+
+**Best for:**
+- Fewer navigation links (3-5 items)
+- When you want a centered, compact look
+- Minimalist designs
+- Logo in the center with links around it
+
+---
+
+#### **`justify-content: space-between`**
+
+**Visual Result:**
+```
+┌────────────── container (1200px) ──────────────┐
+│                                                 │
+│[Home]    [About]    [Portfolio]    [Contact]   │  ← Spread across
+│                                                 │
+└─────────────────────────────────────────────────┘
+```
+
+**What happens:**
+- **First item** pushed to the **left edge** of the container
+- **Last item** pushed to the **right edge** of the container
+- **Equal spacing** automatically distributed between all items
+- Items use the **full width** of the container
+- **No empty space** on the left or right sides
+- **`gap` is typically NOT used** (would create uneven spacing)
+
+**Best for:**
+- Traditional navigation bars
+- When you want a full-width, balanced look
+- More navigation links (5+ items)
+- Professional/corporate designs
+
+---
+
+### Why `gap` Works Differently With Each
+
+#### With `justify-content: center` + `gap`:
+```
+┌────────────── container ──────────────┐
+│                                        │
+│    [Home]──40px──[About]──40px──[Portfolio]    │
+│         ↑ gap controls this ↑          │
+└────────────────────────────────────────┘
+```
+- `gap` creates **consistent spacing** between items
+- Items stay grouped together
+- Works perfectly together ✅
+
+#### With `justify-content: space-between` + `gap`:
+```
+┌────────────── container ──────────────┐
+│[Home]──40px + auto space──[About]──40px + auto space──[Portfolio]│
+│       ↑ gap + distributed space = uneven! ↑        │
+└────────────────────────────────────────┘
+```
+- `gap` adds **extra fixed spacing** on top of the auto-distributed space
+- Creates **uneven, unpredictable spacing**
+- Generally looks wrong ❌
+- **Recommendation:** Comment out or remove `gap` when using `space-between`
+
+---
+
+### Comparison Table
+
+| Property | First Item Position | Last Item Position | Spacing Between | `gap` Usage | Best For |
+|----------|-------------------|-------------------|----------------|-------------|----------|
+| `center` | Centered with group | Centered with group | Fixed (`gap`) | ✅ Use it | Compact, minimal nav |
+| `space-between` | Left edge | Right edge | Auto-distributed | ❌ Skip it | Full-width, traditional nav |
+
+---
+
+### Other `justify-content` Options
+
+For completeness, here are other flexbox alignment options:
+
+```css
+/* Default - items start at the left */
+justify-content: flex-start;
+```
+```
+┌────────────── container ──────────────┐
+│[Home] [About] [Portfolio]             │
+└────────────────────────────────────────┘
+```
+
+```css
+/* Items end at the right */
+justify-content: flex-end;
+```
+```
+┌────────────── container ──────────────┐
+│             [Home] [About] [Portfolio]│
+└────────────────────────────────────────┘
+```
+
+```css
+/* Equal space around each item (including edges) */
+justify-content: space-around;
+```
+```
+┌────────────── container ──────────────┐
+│  [Home]   [About]   [Portfolio]       │
+│ ↑space↑  ↑space↑   ↑space↑            │
+└────────────────────────────────────────┘
+```
+
+```css
+/* Equal space distributed evenly (including edges) */
+justify-content: space-evenly;
+```
+```
+┌────────────── container ──────────────┐
+│   [Home]   [About]   [Portfolio]      │
+│ ↑─same─↑ ↑─same─↑  ↑─same─↑           │
+└────────────────────────────────────────┘
+```
+
+---
+
+### Key Takeaway
+
+**`justify-content: center`** groups items together in the middle (use with `gap` for spacing). **`justify-content: space-between`** spreads items edge-to-edge with auto-calculated spacing (don't use `gap`). For traditional navigation bars, `space-between` is the most common choice as it creates a balanced, full-width layout. For compact, modern designs, `center` keeps things minimal and grouped.
+
+---
+
 ## Summary of Core Concepts
 
 1. **`justify-content: space-between` with one child** → Child aligns to the start/left
@@ -662,6 +849,7 @@ nav {
 6. **Flex items lose their original display type** → Block-level children (like `<div>`) line up horizontally by default, not vertically (`flex-direction: row` is default)
 7. **Absolutely positioned elements shrink-wrap** → They lose block-level width behavior and only take content width unless explicitly set with `width: 100%` or `left: 0; right: 0;`
 8. **Fixed positioned elements also shrink-wrap** → Like absolute positioning, `position: fixed` elements shrink to fit content and require explicit `width: 100%` to span full viewport width
+9. **`justify-content: center` vs `space-between`** → `center` groups items in the middle (use with `gap`), `space-between` spreads items edge-to-edge (skip `gap`)
 
 ---
 

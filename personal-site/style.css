@@ -75,9 +75,6 @@ nav {
     background-color: var(--white);
     color: var(--primary-color);
     padding: 15px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: fixed;
     width: 100%;
     top: 0;
@@ -87,7 +84,8 @@ nav {
 
 nav ul {
     display: flex;
-    gap: 40px;
+    /* gap: 40px; */
+    justify-content: space-between;
 }
 
 nav li {
